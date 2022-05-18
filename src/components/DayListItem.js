@@ -14,9 +14,10 @@ export default function DayListItem(props) {
     " day-list__item--selected": props.selected,
     " day-list__item--full": (props.spots === 0)
   })
+  
 
   return (
-    <li onClick={() => props.setDay(props.name)} className={dayClass}>
+    <li onClick={() => props.setDay(props.name)} className={dayClass} selected={props.selected}>
       <h2 className="text--regular" >{props.name}</h2> 
       {(props.spots > 1) && <h3 className="text--light" >{props.spots} spots remaining</h3>}
       {(props.spots === 1) && <h3 className="text--light" >{props.spots} spot remaining</h3>}
