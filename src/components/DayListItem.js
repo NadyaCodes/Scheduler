@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import classNames from "classnames"
 import "components/DayListItem.scss";
 
+
 export default function DayListItem(props) {
+  // console.log("DaylistItem props", props)
 
   // const {name, spots, selected, setDay} = props;
   // let isFull = false;

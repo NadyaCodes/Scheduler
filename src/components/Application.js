@@ -5,23 +5,23 @@ import DayList from "components/DayList.js"
 import Appointment from "components/Appointment/index.js"
 import axios from 'axios';
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+// const days = [
+//   {
+//     id: 1,
+//     name: "Monday",
+//     spots: 2,
+//   },
+//   {
+//     id: 2,
+//     name: "Tuesday",
+//     spots: 5,
+//   },
+//   {
+//     id: 3,
+//     name: "Wednesday",
+//     spots: 0,
+//   },
+// ];
 
 
 
@@ -73,6 +73,7 @@ const appointments = {
 export default function Application(props) {
 
   const [day, setDay] = useState("Monday")
+  const [days, setDays] = useState([]);
   // console.log(appointments)
 
   const allAppointments = Object.values(appointments).map((appointment) => 
@@ -80,11 +81,15 @@ export default function Application(props) {
   );
 
   useEffect(() => {
-    axios.get("/api/appointments").then((response) => {
-      console.log(response.data);
+    axios.get("/api/days").then((response) => {
+      setDays(response.data);
     })
   }, [])
 
+  // useEffect(() => {
+  //   setDay(prev => console.log("prev", prev))
+  // })
+  
   
   return (
     <main className="layout">
@@ -97,7 +102,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} value={day} onChage={setDay} />
+          <DayList days={days} value={day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
