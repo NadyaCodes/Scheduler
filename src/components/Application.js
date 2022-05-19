@@ -5,25 +5,6 @@ import DayList from "components/DayList.js"
 import Appointment from "components/Appointment/index.js"
 import axios from 'axios';
 
-// const days = [
-//   {
-//     id: 1,
-//     name: "Monday",
-//     spots: 2,
-//   },
-//   {
-//     id: 2,
-//     name: "Tuesday",
-//     spots: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Wednesday",
-//     spots: 0,
-//   },
-// ];
-
-
 
 const appointments = {
   "1": {
@@ -64,21 +45,28 @@ const appointments = {
   }
 };
 
-// key={x.id}
-// name={x.name}
-// spots={x.spots}
-// selected={x.name === props.day}
-// setDay={props.setDay}
 
 export default function Application(props) {
 
-  const [day, setDay] = useState("Monday")
-  const [days, setDays] = useState([]);
-  // console.log(appointments)
+  // const [day, setDay] = useState("Monday")
+  // const [days, setDays] = useState([]);
+  // const [appointments, setAppointments] = useState({})
 
   const allAppointments = Object.values(appointments).map((appointment) => 
   <Appointment key={appointment.id} {...appointment} />
   );
+
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // appointments: {}
+  })
+
+  // state = {day: "Monday", days: [] };
+  // setState({ ...state, day: "Tuesday" });
+  const setDay = day => setState({ ...state, day});
+  const setDays = days => setState(prev => ({ ...prev, days }));
+
 
   useEffect(() => {
     axios.get("/api/days").then((response) => {
@@ -102,7 +90,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} value={day} setDay={setDay} />
+          <DayList days={state.days} value={state.day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
