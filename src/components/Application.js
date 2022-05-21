@@ -5,6 +5,7 @@ import DayList from "components/DayList.js"
 import Appointment from "components/Appointment/index.js"
 import axios from 'axios';
 import {getAppointmentsForDay, getInterview} from "helpers/selectors.js";
+import { getInterviewersForDay } from "helpers/selectors.js";
 
 
 export default function Application(props) {
@@ -18,7 +19,7 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers: {}
+    interviewers: []
   })
   const appointments = getAppointmentsForDay(state, state.day);
 
@@ -26,7 +27,7 @@ export default function Application(props) {
   const setDay = day => setState({ ...state, day});
   // const setDays = days => setState(prev => ({ ...prev, days }));
 
-
+  const todaysInterviewers = getInterviewersForDay(state, state.day)
 
 
   useEffect(() => {
@@ -53,6 +54,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={todaysInterviewers}
       />
     );
   });
