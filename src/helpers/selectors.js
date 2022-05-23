@@ -38,42 +38,29 @@ function getInterview(state, interview) {
 
 function getInterviewersForDay(state, day) {
 
-  if (!day) {
-    return null;
-  }
-
   if (!state.days) {
     return [];
   }
 
-  const todaysAppointments = getAppointmentsForDay(state, day)
+  const findDay = state.days.filter(date => date.name === day)
 
-  if (!todaysAppointments) {
-    return null;
+  if (!findDay[0]) {
+    return findDay;
   }
 
-  const findInterviews = todaysAppointments.filter(interviews => interviews.interview != null)
+  const interviewerIDs = findDay[0].interviewers
 
-  const interviewersArray = []
-
-  for (let int in findInterviews) {
-    const interviewerID = [findInterviews[int].interview.interviewer]
-    const interviewerObject = state.interviewers[interviewerID]
-
-    let doubles = false;
-    for (let i in interviewersArray) {
-      if (interviewerObject.id === interviewersArray[i].id) {
-        doubles = true;
-      }
-    }
-
-    if (!doubles) {
-      interviewersArray.push(interviewerObject)
-    }
-
+  if (!interviewerIDs) {
+    return []
   }
 
-  return interviewersArray;
+  const interviewerArray = []
+
+  for (let int in interviewerIDs) {
+    interviewerArray.push(state.interviewers[interviewerIDs[int]])
+  }
+
+  return interviewerArray;
 
 }
 
