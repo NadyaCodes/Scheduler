@@ -47,17 +47,15 @@ export default function Application(props) {
       url: URL,
       data: 
         {...appointment}
-    }).catch(error => {
-      console.log(error)
     }).then(res => {
-      // console.log(res)
-      setState( {
-        ...state,
-        appointments
-      })
-    }
+        setState({
+          ...state,
+          appointments
+        })
 
-    );
+    }).catch(error => {
+      return Promise.reject(error)
+    });
 
 
   }
@@ -85,27 +83,15 @@ export default function Application(props) {
       url: URL,
       data: 
         {...appointment}
-    }).catch(error => {
-      console.log(error)
     }).then(res => {
       console.log("res",res )
       setState( {
         ...state,
         appointments
       })
-    }
-
-    );
-
-    // return axios
-    //   .delete(URL, {data: {...appointment}})
-    //     .then((res) => {
-    //       console.log('res', res)
-    //       setState({
-    //         ...state,
-    //         appointments
-    //       })
-    //     })
+    }).catch(error => {
+      return Promise.reject(error)
+    })
 
   }
 
