@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from 'react';
+import React from 'react';
 import classNames from "classnames";
 import "components/InterviewerListItem.scss";
 
@@ -7,7 +7,7 @@ export default function InterviewerListItem(props) {
 
   // const {id, name, avatar, selected} = props;
 
-  const [interviewer, setInterviewer] = useState("")
+  // const [interviewer, setInterviewer] = useState("")
 
   const interviewerClass = classNames("interviewers__item", {
     " interviewers__item--selected": props.selected

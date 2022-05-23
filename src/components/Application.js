@@ -27,6 +27,48 @@ export default function Application(props) {
   const setDay = day => setState({ ...state, day});
   // const setDays = days => setState(prev => ({ ...prev, days }));
 
+  function bookInterview(id, interview) {
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: {...interview}
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+
+    const URL = `/api/appointments/${appointment.id}`
+
+    return axios({
+      method: "PUT",
+      url: URL,
+      data: 
+        {...appointment}
+    }).catch(error => {
+      console.log(error)
+    }).then(res => {
+      // console.log(res)
+      setState( {
+        ...state,
+        appointments
+      })
+    }
+
+    );
+
+
+    // return axios.put({ URL, data: {...appointment}})
+    //   .then((res) => {
+    //     console.log("res.data", res.data)
+    //   })
+
+
+  }
+
+
   const todaysInterviewers = getInterviewersForDay(state, state.day)
 
 
@@ -34,7 +76,7 @@ export default function Application(props) {
     Promise.all([
       axios.get('/api/days'),
       axios.get('/api/appointments'),
-      axios.get('/api/interviewers')
+      axios.get('/api/interviewers'),
     ]).then((all) => {
       // console.log(all[0].data)
       // console.log(all[1].data)
@@ -43,10 +85,12 @@ export default function Application(props) {
 
   }, [])
 
+  
+
 
 
   const schedule = appointments.map((appointment) => {
-    const interview = getInterview(state, appointment.interview);
+  const interview = getInterview(state, appointment.interview);
   
     return (
       <Appointment
@@ -55,6 +99,7 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={todaysInterviewers}
+        onBook={bookInterview}
       />
     );
   });
