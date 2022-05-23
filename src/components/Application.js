@@ -60,11 +60,52 @@ export default function Application(props) {
     );
 
 
-    // return axios.put({ URL, data: {...appointment}})
-    //   .then((res) => {
-    //     console.log("res.data", res.data)
-    //   })
+  }
 
+  function cancelInterview(id, interview) {
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    }
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+
+    console.log("appointment", appointment)
+
+    
+    const URL = `/api/appointments/${appointment.id}`
+
+
+    return axios({
+      method: "DELETE",
+      url: URL,
+      data: 
+        {...appointment}
+    }).catch(error => {
+      console.log(error)
+    }).then(res => {
+      console.log("res",res )
+      setState( {
+        ...state,
+        appointments
+      })
+    }
+
+    );
+
+    // return axios
+    //   .delete(URL, {data: {...appointment}})
+    //     .then((res) => {
+    //       console.log('res', res)
+    //       setState({
+    //         ...state,
+    //         appointments
+    //       })
+    //     })
 
   }
 
@@ -100,6 +141,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={todaysInterviewers}
         onBook={bookInterview}
+        onDelete={cancelInterview}
       />
     );
   });
