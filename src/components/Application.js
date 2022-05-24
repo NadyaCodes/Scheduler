@@ -34,7 +34,7 @@ export default function Application(props) {
     //   console.log("interview.interviewer", interview.interviewer.name)
     // }
 
-    console.log("interview", interview)
+    // console.log("interview", interview)
 
     return (
       <Appointment
