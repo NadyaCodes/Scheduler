@@ -13,7 +13,7 @@ export default function DayListItem(props) {
 
 
   return (
-    <li onClick={() => props.setDay(props.name)} className={dayClass} selected={props.selected}>
+    <li onClick={() => props.setDay(props.name)} className={dayClass} selected={props.selected} data-testid="day">
       <h2 className="text--regular" >{props.name}</h2>
       {(props.spots > 1) && <h3 className="text--light" >{props.spots} spots remaining</h3>}
       {(props.spots === 1) && <h3 className="text--light" >{props.spots} spot remaining</h3>}
