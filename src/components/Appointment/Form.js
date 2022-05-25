@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Button from "components/Button.js"
-import InterviewerList from "components/InterviewerList.js"
+import Button from "components/Button.js";
+import InterviewerList from "components/InterviewerList.js";
 
 
 
@@ -9,18 +9,18 @@ export default function Form(props) {
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
-  const spreadInterviewers = [...props.interviewers]
+  const spreadInterviewers = [...props.interviewers];
 
   const reset = () => {
-    setInterviewer(null)
-    setStudent("") 
-  }
+    setInterviewer(null);
+    setStudent("");
+  };
 
   const cancel = () => {
-    reset()
-    props.onCancel()
+    reset();
+    props.onCancel();
     setError("");
-  }
+  };
 
   function validate() {
     if(student === "") {
@@ -29,13 +29,13 @@ export default function Form(props) {
     }
 
     if(interviewer === null) {
-      setError("Please select an interviewer")
-      return
-    }
+      setError("Please select an interviewer");
+      return;
+    };
 
     setError("");
-    props.onSave(student, interviewer)
-  }
+    props.onSave(student, interviewer);
+  };
 
 
   return(
@@ -55,7 +55,7 @@ export default function Form(props) {
         </form>
         <section className="appointment__validation">{error}</section>
         {/* Potential interviewers */}
-        <InterviewerList 
+        <InterviewerList
           interviewers={spreadInterviewers}
           value={interviewer}
           onChange={(event) => setInterviewer(event)}
@@ -69,5 +69,5 @@ export default function Form(props) {
         </section>
       </section>
     </main>
-  )
-}
+  );
+};

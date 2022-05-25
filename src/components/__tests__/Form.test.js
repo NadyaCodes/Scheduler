@@ -1,7 +1,6 @@
 import React from "react";
 
-import { render, prettyDOM, cleanup, fireEvent } from "@testing-library/react";
-import { screen } from "@testing-library/dom";
+import { render, cleanup, fireEvent } from "@testing-library/react";
 
 import Form from "components/Appointment/Form";
 
@@ -28,7 +27,7 @@ describe("Form", () => {
 
   it("validates that the student name is not blank", () => {
     const onSave = jest.fn();
-    const { queryByText, getByText} = render(<Form interviewers={interviewers} student="" onSave={onSave} interviewer={1}/>)
+    const { getByText} = render(<Form interviewers={interviewers} student="" onSave={onSave} interviewer={1}/>)
 
     const button = getByText("Save")
     fireEvent.click(button);
@@ -42,7 +41,7 @@ describe("Form", () => {
   
   it("validates that the interviewer cannot be null", () => {
     const onSave = jest.fn();
-    const { queryByText, getByText} = render(<Form interviewers={interviewers} student="Lydia Miller-Jones" onSave={onSave}/>)
+    const {getByText} = render(<Form interviewers={interviewers} student="Lydia Miller-Jones" onSave={onSave}/>)
     
     const button = getByText("Save")
     fireEvent.click(button);

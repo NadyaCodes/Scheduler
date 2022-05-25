@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react"
+import {useEffect, useState} from "react";
 import axios from 'axios';
 
 export default function useApplicationData() {
@@ -9,7 +9,7 @@ export default function useApplicationData() {
     days: [],
     appointments: {},
     interviewers: [],
-  })
+  });
 
 
 
@@ -28,7 +28,7 @@ export default function useApplicationData() {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     });
 
-  }, [])
+  }, []);
 
 
 
@@ -41,7 +41,7 @@ export default function useApplicationData() {
   
     return spots;
   };
-  
+
 
 
   //update the spots left in the given day
@@ -65,7 +65,7 @@ export default function useApplicationData() {
   
     return updatedState;
   };
-  
+
 
 
   //save new interview function to be exported
@@ -77,33 +77,33 @@ export default function useApplicationData() {
       interview: {...interview}
     };
 
-    //new version of appointments   
+    //new version of appointments
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
 
-    const URL = `/api/appointments/${appointment.id}`
+    const URL = `/api/appointments/${appointment.id}`;
 
     return axios({
       method: "PUT",
       url: URL,
-      data: 
+      data:
         {...appointment}
     }).then(res => {
-      const newState = updateSpots({...state, appointments})
+      const newState = updateSpots({...state, appointments});
 
       setState({
         ...newState
-      })
-      
+      });
+
       return;
     })
     .catch(error => {
       return Promise.reject(error)
     });
 
-  }
+  };
 
 
 
@@ -114,37 +114,36 @@ export default function useApplicationData() {
     const appointment = {
       ...state.appointments[id],
       interview: null
-    }
+    };
 
     //updated version of appointments
     const appointments = {
       ...state.appointments,
       [id]: appointment
-    }
-    
-    const URL = `/api/appointments/${appointment.id}`
+    };
 
+    const URL = `/api/appointments/${appointment.id}`;
 
     return axios({
       method: "DELETE",
       url: URL,
-      data: 
+      data:
         {...appointment}
     }).then(res => {
-      const newState = updateSpots({...state, appointments})
+      const newState = updateSpots({...state, appointments});
 
       setState({
         ...newState
-      })
+      });
 
       return;
 
     }).catch(error => {
-      return Promise.reject(error)
-    })
+      return Promise.reject(error);
+    });
 
-  }
+  };
 
 
-  return { state, setDay, bookInterview, cancelInterview }
-}
+  return { state, setDay, bookInterview, cancelInterview };
+};

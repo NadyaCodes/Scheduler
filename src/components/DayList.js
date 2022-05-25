@@ -1,5 +1,5 @@
 import React from "react";
-import DayListItem from "components/DayListItem.js"
+import DayListItem from "components/DayListItem.js";
 
 export default function DayList(props) {
 
@@ -11,13 +11,13 @@ export default function DayList(props) {
       selected={day.name === props.value}
       setDay={props.setDay}
       />
-  ))
-  
+  ));
+
   return(
     <div>
       {allDays}
     </div>
-  )
+  );
 
 
-}
+};
