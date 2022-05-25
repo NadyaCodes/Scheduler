@@ -5,10 +5,7 @@ import "components/InterviewerListItem.scss";
 
 export default function InterviewerListItem(props) {
 
-  // const {id, name, avatar, selected} = props;
-
-  // const [interviewer, setInterviewer] = useState("")
-
+  //sets interviewer class if interviewer is selected
   const interviewerClass = classNames("interviewers__item", {
     " interviewers__item--selected": props.selected
   })
@@ -24,10 +21,3 @@ export default function InterviewerListItem(props) {
     </li>
   );
 }
-
-
-// const interviewer = {
-//   id: 1,
-//   name: "Sylvia Palmer",
-//   avatar: "https://i.imgur.com/LpaY82x.png"
-// };

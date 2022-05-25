@@ -4,14 +4,8 @@ import "components/DayListItem.scss";
 
 
 export default function DayListItem(props) {
-  // console.log("DaylistItem props", props)
 
-  // const {name, spots, selected, setDay} = props;
-  // let isFull = false;
-  // if (props.spots === 0) {
-  //   isFull = true;
-  // }
-
+  //changes class if day is selected or full
   const dayClass = classNames("day-list__item", {
     " day-list__item--selected": props.selected,
     " day-list__item--full": (props.spots === 0)

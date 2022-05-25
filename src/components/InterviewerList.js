@@ -1,10 +1,13 @@
 import React from "react";
 import "components/InterviewerList.scss";
+
+//component imports
 import InterviewerListItem from "components/InterviewerListItem.js";
+
+//proptypes
 import PropTypes from 'prop-types';
 
 export default function InterviewerList(props) {
-
 
   const {interviewers, value, onChange} = props;
 
@@ -29,26 +32,7 @@ export default function InterviewerList(props) {
 
 }
 
+//makes sure interviewer list is an array
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired
 }
-
-
-// .add("Clickable", () => (
-//   <InterviewerListItem
-//     name={interviewer.name}
-//     avatar={interviewer.avatar}
-//     setInterviewer={() => action("setInterviewer")(interviewer.id)}
-//   />
-// ));
-
-
-// const allDays = props.days.map(x => (
-//   <DayListItem
-//     key={x.id}
-//     name={x.name}
-//     spots={x.spots}
-//     selected={x.name === props.day}
-//     setDay={props.setDay}
-//     />
-// ))

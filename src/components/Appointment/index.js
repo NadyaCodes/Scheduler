@@ -1,21 +1,22 @@
 import React from "react";
-import "components/Appointment/styles.scss"
-import Header from "components/Appointment/Header.js"
-import Show from "components/Appointment/Show.js"
-import Empty from "components/Appointment/Empty.js"
+import "components/Appointment/styles.scss";
+
+// component imports
+import Header from "components/Appointment/Header.js";
+import Show from "components/Appointment/Show.js";
+import Empty from "components/Appointment/Empty.js";
+import Form from "components/Appointment/Form.js";
+import Status from "components/Appointment/Status.js";
+import Confirm from "components/Appointment/Confirm.js";
+import Error from "components/Appointment/Error.js";
+
+//hook imports
 import useVisualMode from "hooks/useVisualMode";
-import Form from "components/Appointment/Form.js"
-import Status from "components/Appointment/Status.js"
-import Confirm from "components/Appointment/Confirm.js"
-import Error from "components/Appointment/Error.js"
-// import { json } from "express/lib/response";
-// import Create from "components/Appointment/Create.js"
-// import { prototype } from "pg-pool";
 
 
 export default function Appointment(props) {
-  // const allInterviewers = [];
 
+  //modes that show different versions of the appointment card
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE"
@@ -27,10 +28,10 @@ export default function Appointment(props) {
   const ERROR_DELETE = "ERROR_DELETE"
 
 
-
+  //hooks to change between views
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
-  )
+  );
 
   function save(name, interviewer) {
     const interview = {
@@ -38,26 +39,15 @@ export default function Appointment(props) {
       interviewer
     }
 
-
     transition(SAVING)
-
-    //     if (!interviewer) {
-    //   return error;
-    // }
-    
     return props.onBook(props.id, interview).then(() => (transition(SHOW))).catch(error => (transition(ERROR_SAVE, true)));
+  };
 
-  }
 
   function maybeDeleteIt(name, interviewer) {
-
-    const interview = {
-      student: name,
-      interviewer
-    }
     transition(CONFIRM)
+  };
 
-  }
 
   function deleteIt(name, interviewer) {
 
@@ -68,9 +58,7 @@ export default function Appointment(props) {
     transition(DELETING, true)
 
     return props.onDelete(props.id, interview).then(() => (transition(EMPTY))).catch(error => (transition(ERROR_DELETE, true)));
-
-
-  }
+  };
 
 
   return(

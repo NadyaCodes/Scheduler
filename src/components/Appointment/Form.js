@@ -8,7 +8,6 @@ export default function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
-  // console.log(interviewer)
 
   const spreadInterviewers = [...props.interviewers]
 
@@ -41,6 +40,7 @@ export default function Form(props) {
 
   return(
     <main className="appointment__card appointment__card--create"  >
+      {/* Student entry field */}
       <section className="appointment__card-left">
         <form autoComplete="off" onSubmit={event => event.preventDefault()}>
           <input
@@ -54,14 +54,15 @@ export default function Form(props) {
           />
         </form>
         <section className="appointment__validation">{error}</section>
-      <InterviewerList 
-        interviewers={spreadInterviewers}
-        value={interviewer}
-        onChange={(event) => setInterviewer(event)}
-        // data-testid="interviewer-list"
-      />
+        {/* Potential interviewers */}
+        <InterviewerList 
+          interviewers={spreadInterviewers}
+          value={interviewer}
+          onChange={(event) => setInterviewer(event)}
+        />
       </section>
       <section className="appointment__card-right">
+        {/* buttons */}
         <section className="appointment__actions">
           <Button danger onClick={() => cancel()}>Cancel</Button>
           <Button confirm onClick={() => validate()} value={student}>Save</Button>
@@ -70,6 +71,3 @@ export default function Form(props) {
     </main>
   )
 }
-
-
-// setInterviewer={() => onChange(interviewer.id)}

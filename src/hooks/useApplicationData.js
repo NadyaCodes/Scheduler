@@ -1,16 +1,9 @@
 import {useEffect, useState} from "react"
 import axios from 'axios';
-import { getAppointmentsForDay } from "helpers/selectors";
-// import "components/Application.scss";
-// import DayList from "components/DayList.js"
-// import Appointment from "components/Appointment/index.js"
-
-// import {getAppointmentsForDay, getInterview} from "helpers/selectors.js";
-// import { getInterviewersForDay } from "helpers/selectors.js";
-// import useApplicationData from "hooks/useApplicationData.js"
 
 export default function useApplicationData() {
 
+  //create state to be exported
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -18,29 +11,28 @@ export default function useApplicationData() {
     interviewers: [],
   })
 
+
+
+  //setDay function to be exported
   const setDay = day => setState({ ...state, day});
 
-  // setDay("Tuesday")
-  // console.log(state)
 
+
+  //set state with days, appointments and interview info from API
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
       axios.get('/api/appointments'),
       axios.get('/api/interviewers'),
     ]).then((all) => {
-      // console.log(all[0].data)
-      // console.log("days?", all[0].data[day])
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
-      console.log(state)
     });
 
   }, [])
 
 
 
-//in gary's, need to declare updated state 
-//return updated days array, instead of state
+  //count the number of spots left in the given day
   const countSpots = (state) => {
     const currentDay = state.days.find((day) => day.name === state.day);
     const appointmentIds = currentDay.appointments;
@@ -50,42 +42,46 @@ export default function useApplicationData() {
     return spots;
   };
   
+
+
+  //update the spots left in the given day
   const updateSpots = (state) => {
     const updatedState = { ...state };
     const updatedDays = [...state.days];
     const updatedDay = { ...state.days.find((day) => day.name === state.day) };
   
     const spots = countSpots(state);
+
+    //set new spots in spreaded day
     updatedDay.spots = spots;
-  
+
     const updatedDayIndex = state.days.findIndex((day) => day.name === state.day);
+
+    //update the day's info
     updatedDays[updatedDayIndex] = updatedDay;
   
+    //update the state with the new days info
     updatedState.days = updatedDays;
   
     return updatedState;
   };
   
 
-  function bookInterview(id, interview) {
-    console.log("spots before booking", state)
 
+  //save new interview function to be exported
+  function bookInterview(id, interview) {
+
+    //new appointment to be added
     const appointment = {
       ...state.appointments[id],
       interview: {...interview}
     };
 
+    //new version of appointments   
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-
-    // console.log(interview)
-
-    // if (!interview.interviewer) {
-    //   throw new Error;
-    // }
-
 
     const URL = `/api/appointments/${appointment.id}`
 
@@ -95,47 +91,36 @@ export default function useApplicationData() {
       data: 
         {...appointment}
     }).then(res => {
-      // console.log(res)
-      // if (interview.interviewer) {
-      //   return setState({
-      //     ...state,
-      //     appointments
-      //   })
-      // } else {
-      //   return Promise.reject("error")
-      // }
-
-
       const newState = updateSpots({...state, appointments})
 
       setState({
         ...newState
       })
+      
       return;
-
     })
     .catch(error => {
       return Promise.reject(error)
     });
 
-
   }
 
 
+
+  //cancel interview function to be exported
   function cancelInterview(id, interview) {
 
+    //new appointment info (cancellation)
     const appointment = {
       ...state.appointments[id],
       interview: null
     }
 
+    //updated version of appointments
     const appointments = {
       ...state.appointments,
       [id]: appointment
     }
-
-    // console.log("appointment", appointment)
-
     
     const URL = `/api/appointments/${appointment.id}`
 
@@ -151,7 +136,9 @@ export default function useApplicationData() {
       setState({
         ...newState
       })
+
       return;
+
     }).catch(error => {
       return Promise.reject(error)
     })
@@ -159,13 +146,5 @@ export default function useApplicationData() {
   }
 
 
-
-
-
-
-
-
   return { state, setDay, bookInterview, cancelInterview }
 }
-
-
