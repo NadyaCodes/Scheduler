@@ -68,6 +68,6 @@ function getInterviewersForDay(state, day) {
 
   return interviewerArray;
 
-};
+}
 
 module.exports = {getAppointmentsForDay, getInterview, getInterviewersForDay };

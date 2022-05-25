@@ -30,7 +30,7 @@ export default function InterviewerList(props) {
     </section>
   );
 
-};
+}
 
 //makes sure interviewer list is an array
 InterviewerList.propTypes = {

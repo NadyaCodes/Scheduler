@@ -35,6 +35,7 @@ export default function Appointment(props) {
 
 
 
+  //appointment functions
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -74,4 +75,4 @@ export default function Appointment(props) {
       <>{mode === ERROR_DELETE && <Error message="Error Deleting" onClose={() => back()}/>}</>
     </article>
   );
-};
+}

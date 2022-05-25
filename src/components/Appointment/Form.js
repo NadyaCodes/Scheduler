@@ -11,6 +11,8 @@ export default function Form(props) {
 
   const spreadInterviewers = [...props.interviewers];
 
+  
+  //form functions
   const reset = () => {
     setInterviewer(null);
     setStudent("");
@@ -70,4 +72,4 @@ export default function Form(props) {
       </section>
     </main>
   );
-};
+}
